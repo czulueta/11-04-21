@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react"
+import { Switch, Route, Redirect } from "react-router-dom"
+import Navbar from "./Navbar.js"
+import Auth from "./Auth.js"
+import Profile from "./Profile.js"
+import Public from "./Public.js"
+import { UserContext } from "../context/UserProvider.js"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+export default function App(){
+  const { token, logout } = useContext(UserContext)
+  return(
+    <div>
+      <Navbar logout={logout}/>
+      <Switch>
+        <Route 
+          path="/"
+          render={() => <Auth />}
+        />
+        <Route 
+          path="/profile"
+          render={() => <Profile />}
+        />
+        <Route 
+          path="/public"
+          render={() => <Public />}
+        />
+      </Switch>
     </div>
-  );
+  )
 }
-
-export default App;
